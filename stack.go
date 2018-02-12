@@ -57,6 +57,7 @@ func (s *MyStack) Push(ele Stack) bool {
 	if s.StackFull() {
 		return false
 	}
+	//先赋值再加Top
 	s.StackPtr[s.Top] = &ele
 	s.Top ++
 	return true
@@ -67,6 +68,7 @@ func (s *MyStack) Pop(ele *Stack) bool {
 	if s.StackEmpty() {
 		return false
 	}
+	//先减Top再取值
 	s.Top --
 	*ele = *s.StackPtr[s.Top]
 	return true
