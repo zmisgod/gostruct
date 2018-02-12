@@ -7,7 +7,11 @@
 
 ```
 go get github.com/zmisgod/gostruct
+
+go test
 ```
+
+
 
 ## Postscript
 

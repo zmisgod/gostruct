@@ -10,12 +10,12 @@ func TestStack (t *testing.T) {
 	mystack := CreateStack(stackSize)
 	var stackone Stack
 	stackone.Name = "zmisgo"
-	stackone.Job = "php"
+	stackone.Job = "stack test1"
 	stackone.Age = 12
 	mystack.Push(stackone)
 	var stacktwo Stack
 	stacktwo.Name = "zmisgod"
-	stacktwo.Job = "golang"
+	stacktwo.Job = "stack test2"
 	stacktwo.Age = 13
 	mystack.Push(stacktwo)
 

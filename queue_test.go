@@ -9,13 +9,13 @@ func TestQueue (t *testing.T) {
 	queueCap := 2
 	myqueue := CreateQueue(queueCap)
 	var queone Queue
-	queone.Name = "zmisgo"
-	queone.Job = "php"
+	queone.Name = "zmisgod"
+	queone.Job = "queue test1"
 	queone.Age = 12
 	myqueue.EnQueue(queone)
 	var quetwo Queue
 	quetwo.Name = "zmisgod"
-	quetwo.Job = "php"
+	quetwo.Job = "queue test2"
 	quetwo.Age = 13
 	myqueue.EnQueue(quetwo)
 	myqueue.QueueTraverse()
