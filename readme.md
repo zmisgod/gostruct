@@ -1,6 +1,7 @@
-# goqueue
+# gostruct
 
-simple queue useing golang
+- [x] simple queue
+- [ ] simple stack
 
 ## install
 
