@@ -1,4 +1,4 @@
-package goqueue 
+package gostruct 
 
 import (
 	"fmt"

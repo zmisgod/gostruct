@@ -5,35 +5,35 @@ simple queue useing golang
 ## install
 
 ```
-go get github.com/zmisgod/goqueue
+go get github.com/zmisgod/gostruct
 ```
 
-for test 
+for test
 
 ```
-package main 
+package main
 
 import (
 	"fmt"
-	"github.com/zmisgod/goqueue"
+	"github.com/zmisgod/gostruct"
 )
 
 func main () {
 	queueCap := 2
-	myqueue := goqueue.CreateQueue(queueCap)
-	var queone goqueue.Queue
+	myqueue := gostruct.CreateQueue(queueCap)
+	var queone gostruct.Queue
 	queone.Name = "zmisgo"
 	queone.Job = "php"
 	queone.Age = 12
 	myqueue.EnQueue(queone)
-	var quetwo goqueue.Queue
+	var quetwo gostruct.Queue
 	quetwo.Name = "zmisgod"
 	quetwo.Job = "php"
 	quetwo.Age = 13
 	myqueue.EnQueue(quetwo)
 	myqueue.QueueTraverse()
 
-	var queueDequeue goqueue.Queue
+	var queueDequeue gostruct.Queue
 	myqueue.DeQueue(&queueDequeue)
 	fmt.Println("_+_+_+_+")
 	fmt.Println(queueDequeue)
@@ -42,7 +42,7 @@ func main () {
 	lenght := myqueue.QueueLength()
 	fmt.Println(lenght)
 
-	var queueDequeueR goqueue.Queue
+	var queueDequeueR gostruct.Queue
 	myqueue.DeQueue(&queueDequeueR)
 	fmt.Println("_+_+_+_+")
 	fmt.Println(queueDequeueR)
