@@ -5,31 +5,25 @@ import (
 	"testing"
 )
 
-func TestQueue (t *testing.T) {
+func TestQueue(t *testing.T) {
 	queueCap := 2
 	myqueue := CreateQueue(queueCap)
-	var queone Queue
-	queone.Name = "zmisgod"
-	queone.Job = "queue test1"
-	queone.Age = 12
+	var queone = "this is a test"
 	myqueue.EnQueue(queone)
-	var quetwo Queue
-	quetwo.Name = "zmisgod"
-	quetwo.Job = "queue test2"
-	quetwo.Age = 13
+	var quetwo = "this is a test 2"
 	myqueue.EnQueue(quetwo)
-	myqueue.QueueTraverse()
+	myqueue.Traverse()
 
-	var queueDequeue Queue
+	var queueDequeue interface{}
 	myqueue.DeQueue(&queueDequeue)
 	fmt.Println("_+_+_+_+")
 	fmt.Println(queueDequeue)
 	fmt.Println("_+_+_+_+")
 
-	lenght := myqueue.QueueLength()
+	lenght := myqueue.Llength()
 	fmt.Println(lenght)
 
-	var queueDequeueR Queue
+	var queueDequeueR interface{}
 	myqueue.DeQueue(&queueDequeueR)
 	fmt.Println("_+_+_+_+")
 	fmt.Println(queueDequeueR)
