@@ -8,7 +8,7 @@ Practice the data structure with the go language
 
 ## list
 - 线性表
-    - [ ] 数组
+    - [x] 数组
     - 链表
         - [x] 单链表
         - [x] 双向链表
