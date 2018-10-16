@@ -4,56 +4,43 @@ import (
 	"fmt"
 )
 
-//SingleLinkedList 单链表
-type SingleLinkedList struct {
+//RepeatLinkedList 单链表
+type RepeatLinkedList struct {
 	length uint //单链表最大长度
-	head   *SListNode
+	head   *RListNode
 }
 
-//SListNode 每一个节点
-type SListNode struct {
+//RListNode 每一个节点
+type RListNode struct {
 	value interface{}
-	next  *SListNode
+	next  *RListNode
 }
 
-//NewSingleListNode 新建一个NewListNode
-func NewSingleListNode(data interface{}) *SListNode {
-	return &SListNode{data, nil}
+//NewRepeatListNode 新建一个NewListNode
+func NewRepeatListNode(data interface{}) *RListNode {
+	return &RListNode{data, nil}
 }
 
 //GetNext ListNode 的下一个节点指针
-func (s *SListNode) GetNext() *SListNode {
+func (s *RListNode) GetNext() *RListNode {
 	return s.next
 }
 
 //GetValue 获取ListNode节点的值
-func (s *SListNode) GetValue() interface{} {
+func (s *RListNode) GetValue() interface{} {
 	if s == nil {
 		return "error"
 	}
 	return s.value
 }
 
-//CreateNewSingleLinkedList 创建一个单链表
-func CreateNewSingleLinkedList() *SingleLinkedList {
-	return &SingleLinkedList{length: 0, head: NewSingleListNode(0)}
-}
-
-//InsertAfter 在某个节点之后插入
-func (s *SingleLinkedList) InsertAfter(n *SListNode, data interface{}) bool {
-	if n == nil {
-		return false
-	}
-	newNode := NewSingleListNode(data)
-	oldNext := n.next
-	n.next = newNode
-	newNode.next = oldNext
-	s.length++
-	return true
+//CreateNewRepeatLinkedList 创建一个单链表
+func CreateNewRepeatLinkedList() *RepeatLinkedList {
+	return &RepeatLinkedList{length: 0, head: NewRepeatListNode(0)}
 }
 
 //PreNode 根据ListNode查找前一个节点指针
-func (s *SingleLinkedList) PreNode(n *SListNode) *SListNode {
+func (s *RepeatLinkedList) PreNode(n *RListNode) *RListNode {
 	if s.head == nil || n == nil {
 		return nil
 	}
@@ -70,11 +57,24 @@ func (s *SingleLinkedList) PreNode(n *SListNode) *SListNode {
 	return nil
 }
 
-//InsertBefore 在n之前插入数据
-func (s *SingleLinkedList) InsertBefore(n *SListNode, data interface{}) bool {
-	if n == nil || s.head == nil {
+//InsertAfter 在某个节点之后插入
+func (s *RepeatLinkedList) InsertAfter(n *RListNode, data interface{}) bool {
+	if n == nil {
 		return false
 	}
+	newNode := NewRepeatListNode(data)
+	oldNext := n.next
+	if oldNext == nil {
+		oldNext = s.head
+	}
+	n.next = newNode
+	newNode.next = oldNext
+	s.length++
+	return true
+}
+
+//InsertBefore 在n之前插入数据
+func (s *RepeatLinkedList) InsertBefore(n *RListNode, data interface{}) bool {
 	if n == nil {
 		return false
 	}
@@ -83,30 +83,36 @@ func (s *SingleLinkedList) InsertBefore(n *SListNode, data interface{}) bool {
 }
 
 //InsertAfterHead 插入到head后
-func (s *SingleLinkedList) InsertAfterHead(data interface{}) bool {
+func (s *RepeatLinkedList) InsertAfterHead(data interface{}) bool {
 	return s.InsertAfter(s.head, data)
 }
 
 //InsertAfterTail 插入到尾节点后
-func (s *SingleLinkedList) InsertAfterTail(data interface{}) bool {
+func (s *RepeatLinkedList) InsertAfterTail(data interface{}) bool {
 	curr := s.head
-	for curr.next != nil {
-		curr = curr.next
+	var i uint
+	for ; i < s.length; i++ {
+		if curr.next != nil {
+			curr = curr.next
+		}
 	}
 	return s.InsertAfter(curr, data)
 }
 
 //InsertBeforeTail 插入到尾节点前插入
-func (s *SingleLinkedList) InsertBeforeTail(data interface{}) bool {
+func (s *RepeatLinkedList) InsertBeforeTail(data interface{}) bool {
 	curr := s.head
-	for curr.next != nil {
-		curr = curr.next
+	var i uint
+	for ; i < s.length; i++ {
+		if curr.next != nil {
+			curr = curr.next
+		}
 	}
 	return s.InsertAfter(curr, data)
 }
 
 //FindByIndex 根据索引找到对应的node
-func (s *SingleLinkedList) FindByIndex(index uint) *SListNode {
+func (s *RepeatLinkedList) FindByIndex(index uint) *RListNode {
 	//因为index 从0 开始，而length为链表的长度，从 1开始，所以
 	//第一个数据的length = 1 index = 0
 	//第二个数据的length = 2 index = 1
@@ -123,7 +129,7 @@ func (s *SingleLinkedList) FindByIndex(index uint) *SListNode {
 }
 
 //DeleteNode 删除node
-func (s *SingleLinkedList) DeleteNode(n *SListNode) bool {
+func (s *RepeatLinkedList) DeleteNode(n *RListNode) bool {
 	if n == nil {
 		return false
 	}
@@ -141,10 +147,11 @@ func (s *SingleLinkedList) DeleteNode(n *SListNode) bool {
 }
 
 //Traverse 遍历
-func (s *SingleLinkedList) Traverse() {
+func (s *RepeatLinkedList) Traverse() {
 	if s.length > 0 {
 		node := s.head.next
-		for node != nil {
+		var i uint
+		for ; i < s.length; i++ {
 			fmt.Println(node)
 			node = node.next
 		}

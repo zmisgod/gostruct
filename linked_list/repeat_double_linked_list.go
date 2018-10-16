@@ -4,59 +4,59 @@ import (
 	"fmt"
 )
 
-//DoublueLinkedList 双向链表
-type DoublueLinkedList struct {
+//RepeatDoublueLinkedList 双向链表
+type RepeatDoublueLinkedList struct {
 	length uint
-	head   *DListNode
+	head   *RDListNode
 }
 
-//DListNode 双向链表
-type DListNode struct {
+//RDListNode 双向链表
+type RDListNode struct {
 	value interface{}
-	next  *DListNode
-	pre   *DListNode
+	next  *RDListNode
+	pre   *RDListNode
 }
 
-//NewDoubleListNode 创建一个node
-func NewDoubleListNode(value interface{}) *DListNode {
-	return &DListNode{value, nil, nil}
+//NewRepeatDoubleListNode 创建一个node
+func NewRepeatDoubleListNode(value interface{}) *RDListNode {
+	return &RDListNode{value, nil, nil}
 }
 
 //GetNext 下一个node指针
-func (d *DListNode) GetNext() *DListNode {
+func (d *RDListNode) GetNext() *RDListNode {
 	return d.next
 }
 
 //GetPre 上一个node指针
-func (d *DListNode) GetPre() *DListNode {
+func (d *RDListNode) GetPre() *RDListNode {
 	return d.pre
 }
 
 //GetValue 此node的值
-func (d *DListNode) GetValue() interface{} {
+func (d *RDListNode) GetValue() interface{} {
 	if d == nil {
 		return "ERROR"
 	}
 	return d.value
 }
 
-//CreateNewDoublueLinkedList 创建一个双向链表
-func CreateNewDoublueLinkedList() *DoublueLinkedList {
-	return &DoublueLinkedList{length: 0, head: NewDoubleListNode(0)}
+//CreateNewRepeatDoublueLinkedList 创建一个双向链表
+func CreateNewRepeatDoublueLinkedList() *RepeatDoublueLinkedList {
+	return &RepeatDoublueLinkedList{length: 0, head: NewRepeatDoubleListNode(0)}
 }
 
 //PreNode 查找上一个node
-func (d *DoublueLinkedList) PreNode(n *DListNode) *DListNode {
+func (d *RepeatDoublueLinkedList) PreNode(n *RDListNode) *RDListNode {
 	return n.pre
 }
 
 //NextNode 根据指针查找下一个node
-func (d *DoublueLinkedList) NextNode(n *DListNode) *DListNode {
+func (d *RepeatDoublueLinkedList) NextNode(n *RDListNode) *RDListNode {
 	return n.next
 }
 
 //FindByIndex 根据index查找
-func (d *DoublueLinkedList) FindByIndex(index uint) *DListNode {
+func (d *RepeatDoublueLinkedList) FindByIndex(index uint) *RDListNode {
 	//1 0
 	if d.length >= index {
 		current := d.head.next
@@ -72,11 +72,11 @@ func (d *DoublueLinkedList) FindByIndex(index uint) *DListNode {
 //InsertAfter 在之后插入
 //              pre5 pre6
 // [pre1 pre2] [nil  nil ] [pre3 pre4]
-func (d *DoublueLinkedList) InsertAfter(n *DListNode, value interface{}) bool {
+func (d *RepeatDoublueLinkedList) InsertAfter(n *RDListNode, value interface{}) bool {
 	if n == nil || d.head == nil {
 		return false
 	}
-	newNode := NewDoubleListNode(value)
+	newNode := NewRepeatDoubleListNode(value)
 	nextNode := n.next
 
 	n.next = newNode
@@ -90,12 +90,12 @@ func (d *DoublueLinkedList) InsertAfter(n *DListNode, value interface{}) bool {
 }
 
 //InsertAfterHead 插入head
-func (d *DoublueLinkedList) InsertAfterHead(value interface{}) bool {
+func (d *RepeatDoublueLinkedList) InsertAfterHead(value interface{}) bool {
 	return d.InsertAfter(d.head, value)
 }
 
 //Insert 顺序插入
-func (d *DoublueLinkedList) Insert(value interface{}) bool {
+func (d *RepeatDoublueLinkedList) Insert(value interface{}) bool {
 	node := d.head
 	for node.next != nil {
 		node = node.next
@@ -106,7 +106,7 @@ func (d *DoublueLinkedList) Insert(value interface{}) bool {
 //InsertBefore 在之前插入
 //              pre5 pre6
 // [pre1 pre2] [nil  nil ] [pre3 pre4]
-func (d *DoublueLinkedList) InsertBefore(n *DListNode, value interface{}) bool {
+func (d *RepeatDoublueLinkedList) InsertBefore(n *RDListNode, value interface{}) bool {
 	node := n.pre
 	return d.InsertAfter(node, value)
 }
@@ -114,7 +114,7 @@ func (d *DoublueLinkedList) InsertBefore(n *DListNode, value interface{}) bool {
 //DeleteNode 删除node
 //              pre5 pre6
 // [pre1 pre2] [nil  nil ] [pre3 pre4]
-func (d *DoublueLinkedList) DeleteNode(n *DListNode) bool {
+func (d *RepeatDoublueLinkedList) DeleteNode(n *RDListNode) bool {
 	if n == nil {
 		return false
 	}
@@ -131,7 +131,7 @@ func (d *DoublueLinkedList) DeleteNode(n *DListNode) bool {
 }
 
 //Traverse 遍历list
-func (d *DoublueLinkedList) Traverse() {
+func (d *RepeatDoublueLinkedList) Traverse() {
 	if d.length > 0 {
 		node := d.head.next
 		for node != nil {
