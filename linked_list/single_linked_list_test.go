@@ -55,7 +55,7 @@ func TestDelete(t *testing.T) {
 	singleList.InsertAfterTail("111")
 	singleList.InsertAfterTail("222")
 	singleList.InsertAfterTail("333")
-	node := singleList.FindByIndex(12)
+	node := singleList.FindByIndex(0)
 	singleList.DeleteNode(node)
 	singleList.Traverse()
 }

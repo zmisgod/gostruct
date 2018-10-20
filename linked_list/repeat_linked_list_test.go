@@ -26,7 +26,8 @@ func TestRFindByIndex(t *testing.T) {
 	singleList.InsertAfterTail("111")
 	singleList.InsertAfterTail("222")
 	singleList.InsertAfterTail("333")
-	node := singleList.FindByIndex(3)
+	singleList.Traverse()
+	node := singleList.FindByIndex(0)
 	fmt.Println(node.GetValue())
 }
 
@@ -59,7 +60,7 @@ func TestRDelete(t *testing.T) {
 	singleList.DeleteNode(node)
 	node1 := singleList.FindByIndex(1)
 	singleList.DeleteNode(node1)
-	node2 := singleList.FindByIndex(0)
-	singleList.DeleteNode(node2)
+	// node2 := singleList.FindByIndex(0)
+	// singleList.DeleteNode(node2)
 	singleList.Traverse()
 }

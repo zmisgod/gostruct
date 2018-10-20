@@ -57,7 +57,11 @@ func TestDeleteNodeDouble(t *testing.T) {
 	doubleList.Insert("333")
 	doubleList.Insert("444")
 	doubleList.Insert("555")
-	node := doubleList.FindByIndex(2)
+	node := doubleList.FindByIndex(0)
+	doubleList.DeleteNode(node)
+	node = doubleList.FindByIndex(0)
+	doubleList.DeleteNode(node)
+	node = doubleList.FindByIndex(0)
 	doubleList.DeleteNode(node)
 	doubleList.Traverse()
 }

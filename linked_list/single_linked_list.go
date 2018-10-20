@@ -29,7 +29,7 @@ func (s *SListNode) GetNext() *SListNode {
 //GetValue 获取ListNode节点的值
 func (s *SListNode) GetValue() interface{} {
 	if s == nil {
-		return "error"
+		return nil
 	}
 	return s.value
 }
@@ -131,9 +131,6 @@ func (s *SingleLinkedList) DeleteNode(n *SListNode) bool {
 		return false
 	}
 	pre := s.PreNode(n)
-	if pre == nil {
-		return false
-	}
 	pre.next = n.next
 	n = nil
 	s.length--

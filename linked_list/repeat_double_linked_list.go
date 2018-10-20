@@ -19,7 +19,10 @@ type RDListNode struct {
 
 //NewRepeatDoubleListNode 创建一个node
 func NewRepeatDoubleListNode(value interface{}) *RDListNode {
-	return &RDListNode{value, nil, nil}
+	node := RDListNode{value, nil, nil}
+	node.pre = &node
+	node.next = &node
+	return &node
 }
 
 //GetNext 下一个node指针
@@ -35,14 +38,17 @@ func (d *RDListNode) GetPre() *RDListNode {
 //GetValue 此node的值
 func (d *RDListNode) GetValue() interface{} {
 	if d == nil {
-		return "ERROR"
+		return nil
 	}
 	return d.value
 }
 
 //CreateNewRepeatDoublueLinkedList 创建一个双向链表
 func CreateNewRepeatDoublueLinkedList() *RepeatDoublueLinkedList {
-	return &RepeatDoublueLinkedList{length: 0, head: NewRepeatDoubleListNode(0)}
+	node := NewRepeatDoubleListNode(0)
+	node.next = node
+	node.pre = node
+	return &RepeatDoublueLinkedList{length: 0, head: node}
 }
 
 //PreNode 查找上一个node
@@ -59,10 +65,10 @@ func (d *RepeatDoublueLinkedList) NextNode(n *RDListNode) *RDListNode {
 func (d *RepeatDoublueLinkedList) FindByIndex(index uint) *RDListNode {
 	//1 0
 	if d.length >= index {
-		current := d.head.next
+		current := d.head.GetNext()
 		var i uint
 		for ; i < index; i++ {
-			current = current.next
+			current = current.GetNext()
 		}
 		return current
 	}
@@ -73,18 +79,15 @@ func (d *RepeatDoublueLinkedList) FindByIndex(index uint) *RDListNode {
 //              pre5 pre6
 // [pre1 pre2] [nil  nil ] [pre3 pre4]
 func (d *RepeatDoublueLinkedList) InsertAfter(n *RDListNode, value interface{}) bool {
-	if n == nil || d.head == nil {
+	if n == nil {
 		return false
 	}
 	newNode := NewRepeatDoubleListNode(value)
-	nextNode := n.next
-
+	nextNode := n.GetNext()
 	n.next = newNode
 	newNode.pre = n
 	newNode.next = nextNode
-	if nextNode != nil {
-		nextNode.pre = newNode
-	}
+	nextNode.pre = newNode
 	d.length++
 	return true
 }
@@ -97,8 +100,9 @@ func (d *RepeatDoublueLinkedList) InsertAfterHead(value interface{}) bool {
 //Insert 顺序插入
 func (d *RepeatDoublueLinkedList) Insert(value interface{}) bool {
 	node := d.head
-	for node.next != nil {
-		node = node.next
+	var i uint
+	for ; i < d.length; i++ {
+		node = node.GetNext()
 	}
 	return d.InsertAfter(node, value)
 }
@@ -107,7 +111,7 @@ func (d *RepeatDoublueLinkedList) Insert(value interface{}) bool {
 //              pre5 pre6
 // [pre1 pre2] [nil  nil ] [pre3 pre4]
 func (d *RepeatDoublueLinkedList) InsertBefore(n *RDListNode, value interface{}) bool {
-	node := n.pre
+	node := n.GetPre()
 	return d.InsertAfter(node, value)
 }
 
@@ -121,23 +125,24 @@ func (d *RepeatDoublueLinkedList) DeleteNode(n *RDListNode) bool {
 	if d.length <= 0 {
 		return false
 	}
-	preNode := n.pre
-	nextNode := n.next
+	preNode := n.GetPre()
+	nextNode := n.GetNext()
 	n = nil
 	preNode.next = nextNode
-	nextNode.pre = nextNode
+	nextNode.pre = preNode
 	d.length--
 	return true
 }
 
 //Traverse 遍历list
 func (d *RepeatDoublueLinkedList) Traverse() {
+	fmt.Println(fmt.Sprintf(" single linked list's length is %d ", d.length))
 	if d.length > 0 {
-		node := d.head.next
-		for node != nil {
+		node := d.head.GetNext()
+		var i uint
+		for ; i < d.length; i++ {
 			fmt.Println(node.GetValue())
-			node = node.next
+			node = node.GetNext()
 		}
 	}
-	fmt.Println(fmt.Sprintf(" single linked list's length is %d ", d.length))
 }

@@ -35,7 +35,7 @@ func (d *DListNode) GetPre() *DListNode {
 //GetValue 此node的值
 func (d *DListNode) GetValue() interface{} {
 	if d == nil {
-		return "ERROR"
+		return nil
 	}
 	return d.value
 }
@@ -125,7 +125,7 @@ func (d *DoublueLinkedList) DeleteNode(n *DListNode) bool {
 	nextNode := n.next
 	n = nil
 	preNode.next = nextNode
-	nextNode.pre = nextNode
+	nextNode.pre = preNode
 	d.length--
 	return true
 }

@@ -4,6 +4,11 @@ import (
 	"fmt"
 )
 
+//解决处理约瑟夫问题
+//人们站在一个等待被处决的圈子里。 计数从圆圈中的指定点开始，并沿指定方向围绕圆圈进行。
+//在跳过指定数量的人之后，执行下一个人。 对剩下的人重复该过程，从下一个人开始，朝同一方向跳过相同数量的人，直到只剩下一个人，并被释放。
+//问题即，给定人数、起点、方向和要跳过的数字，选择初始圆圈中的位置以避免被处决。
+
 //RepeatLinkedList 单链表
 type RepeatLinkedList struct {
 	length uint //单链表最大长度
@@ -29,31 +34,33 @@ func (s *RListNode) GetNext() *RListNode {
 //GetValue 获取ListNode节点的值
 func (s *RListNode) GetValue() interface{} {
 	if s == nil {
-		return "error"
+		return nil
 	}
 	return s.value
 }
 
 //CreateNewRepeatLinkedList 创建一个单链表
 func CreateNewRepeatLinkedList() *RepeatLinkedList {
-	return &RepeatLinkedList{length: 0, head: NewRepeatListNode(0)}
+	node := NewRepeatListNode(0)
+	node.next = node
+	return &RepeatLinkedList{length: 0, head: node}
 }
 
 //PreNode 根据ListNode查找前一个节点指针
 func (s *RepeatLinkedList) PreNode(n *RListNode) *RListNode {
-	if s.head == nil || n == nil {
+	if n == nil {
 		return nil
 	}
-	var i uint
 	currentPoint := s.head
 	nextPoint := s.head.next
-	for ; i < s.length; i++ {
+	for nextPoint != s.head {
 		if nextPoint == n {
 			return currentPoint
 		}
 		currentPoint = nextPoint
 		nextPoint = currentPoint.next
 	}
+
 	return nil
 }
 
@@ -64,11 +71,17 @@ func (s *RepeatLinkedList) InsertAfter(n *RListNode, data interface{}) bool {
 	}
 	newNode := NewRepeatListNode(data)
 	oldNext := n.next
-	if oldNext == nil {
-		oldNext = s.head
+	if s.head.next == s.head {
+		s.head.next = newNode
 	}
-	n.next = newNode
-	newNode.next = oldNext
+	//之前的next指向head
+	if n.next == s.head {
+		n.next = newNode
+		newNode.next = s.head
+	} else {
+		n.next = newNode
+		newNode.next = oldNext
+	}
 	s.length++
 	return true
 }
@@ -90,20 +103,16 @@ func (s *RepeatLinkedList) InsertAfterHead(data interface{}) bool {
 //InsertAfterTail 插入到尾节点后
 func (s *RepeatLinkedList) InsertAfterTail(data interface{}) bool {
 	curr := s.head
-	var i uint
-	for ; i < s.length; i++ {
-		if curr.next != nil {
-			curr = curr.next
-		}
+	for curr.next != s.head {
+		curr = curr.next
 	}
 	return s.InsertAfter(curr, data)
 }
 
 //InsertBeforeTail 插入到尾节点前插入
 func (s *RepeatLinkedList) InsertBeforeTail(data interface{}) bool {
-	curr := s.head
-	var i uint
-	for ; i < s.length; i++ {
+	curr := s.head.next
+	for curr != s.head {
 		if curr.next != nil {
 			curr = curr.next
 		}
@@ -137,9 +146,6 @@ func (s *RepeatLinkedList) DeleteNode(n *RListNode) bool {
 		return false
 	}
 	pre := s.PreNode(n)
-	if pre == nil {
-		return false
-	}
 	pre.next = n.next
 	n = nil
 	s.length--
@@ -148,13 +154,12 @@ func (s *RepeatLinkedList) DeleteNode(n *RListNode) bool {
 
 //Traverse 遍历
 func (s *RepeatLinkedList) Traverse() {
+	fmt.Println(fmt.Sprintf(" single linked list's length is %d ", s.length))
 	if s.length > 0 {
 		node := s.head.next
-		var i uint
-		for ; i < s.length; i++ {
+		for node != s.head {
 			fmt.Println(node)
 			node = node.next
 		}
 	}
-	fmt.Println(fmt.Sprintf(" single linked list's length is %d ", s.length))
 }
