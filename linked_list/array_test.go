@@ -11,11 +11,12 @@ func TestAArrayPush(t *testing.T) {
 	array.Insert(2, 333)
 	array.Insert(3, 444)
 	array.Traverse()
+	array.DeleteByIndex(0)
 	array.DeleteByIndex(1)
 	array.Traverse()
 
-	array.InsertToTail(777)
-	array.InsertToTail(888)
-	array.InsertToTail(999)
-	array.Traverse()
+	// array.InsertToTail(777)
+	// array.InsertToTail(888)
+	// array.InsertToTail(999)
+	// array.Traverse()
 }

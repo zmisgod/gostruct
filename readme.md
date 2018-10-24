@@ -13,8 +13,8 @@ Practice the data structure with the go language
         - [x] 单链表
         - [x] 双向链表
         - [x] 循环链表
-        - [-] 双向循环链表
-        - [ ] 静态链表
+        - [x] 双向循环链表
+        - [-] 静态链表
     - 栈
         - [ ] 顺序栈
         - [ ] 链式栈
