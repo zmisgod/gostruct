@@ -27,22 +27,22 @@ func (s *StaticListNode) GetNextIndex() uint {
 	return s.next
 }
 
-//GetData
+//GetData 获取node 的value
 func (s *StaticListNode) GetData() interface{} {
 	return s.data
 }
 
-//SetData
+//SetData 设置node的value
 func (s *StaticListNode) SetData(value interface{}) {
 	s.data = value
 }
 
-//SetNextIndex
+//SetNextIndex 设置node的下一个index
 func (s *StaticListNode) SetNextIndex(index uint) {
 	s.next = index
 }
 
-//NewStaticLinkedList
+//NewStaticLinkedList 创建一个新的静态链表
 func NewStaticLinkedList(cap uint) (*StaticLinkedList, error) {
 	if cap <= 2 {
 		return nil, errors.New("cap need > 2")
@@ -61,7 +61,7 @@ func NewStaticLinkedList(cap uint) (*StaticLinkedList, error) {
 	return &StaticLinkedList{data: data, length: 0}, nil
 }
 
-//Len
+//Len 数组长度
 func (s *StaticLinkedList) Len() uint {
 	return s.length
 }
@@ -79,12 +79,12 @@ func (s *StaticLinkedList) IsIndexOutOffRange(index uint) bool {
 	return true
 }
 
-//FreeNodeIndex 获取下一个空链的索引
+//FreeNodeNextIndex 获取下一个空链的索引
 func (s *StaticLinkedList) FreeNodeNextIndex() uint {
 	return s.data[0].GetNextIndex()
 }
 
-//IsFull
+//IsFull 是否为满
 func (s *StaticLinkedList) IsFull() bool {
 	if s.FreeNodeNextIndex() == s.HeadNodeNextIndex() {
 		return true
@@ -92,7 +92,7 @@ func (s *StaticLinkedList) IsFull() bool {
 	return false
 }
 
-//IsEmpty
+//IsEmpty 是否为空
 func (s *StaticLinkedList) IsEmpty() bool {
 	if 0 == s.HeadNodeNextIndex() {
 		return true
@@ -100,11 +100,12 @@ func (s *StaticLinkedList) IsEmpty() bool {
 	return false
 }
 
-//HeadNodeIndex 获取当前链表头节点指向的索引
+//HeadNodeNextIndex 获取当前链表头节点指向的索引
 func (s *StaticLinkedList) HeadNodeNextIndex() uint {
 	return s.data[s.olen()-1].GetNextIndex()
 }
 
+//PreNodeIndex 找到前一个数据的index
 func (s *StaticLinkedList) PreNodeIndex(index uint) (uint, error) {
 	var err error
 	stop := false
@@ -125,6 +126,7 @@ func (s *StaticLinkedList) PreNodeIndex(index uint) (uint, error) {
 	return last, err
 }
 
+//FindByIndex 根据索引查找数据
 func (s *StaticLinkedList) FindByIndex(index uint) (StaticListNode, error) {
 	if s.IsIndexOutOffRange(index) {
 		return StaticListNode{}, errors.New("索引越界")
@@ -132,6 +134,7 @@ func (s *StaticLinkedList) FindByIndex(index uint) (StaticListNode, error) {
 	return s.data[index], nil
 }
 
+//InsertAfter 在index后面插入
 func (s *StaticLinkedList) InsertAfter(value interface{}, index uint) bool {
 	if s.IsIndexOutOffRange(index) {
 		return false
@@ -164,32 +167,30 @@ func (s *StaticLinkedList) InsertAfter(value interface{}, index uint) bool {
 	return true
 }
 
+//Insert 插入
 func (s *StaticLinkedList) Insert(value interface{}) bool {
 	return s.InsertAfter(value, s.FreeNodeNextIndex())
 }
 
+//DeleteNode 删除
 func (s *StaticLinkedList) DeleteNode(index uint) bool {
-	if s.IsEmpty() {
+	if s.IsIndexOutOffRange(index) {
 		return false
 	}
-	if index > 2 {
-		return false
-	}
-	//头节点的index
-	headNodeIndex := s.HeadNodeNextIndex()
 	//index对应的node
 	indexNode, err := s.FindByIndex(index)
 	if err != nil {
 		return false
 	}
-	preNode, err := s.FindByIndex(index - 1)
-	if err == nil {
-		s.data[preNode.GetNextIndex()].SetNextIndex(indexNode.GetNextIndex())
+	nextIndex := indexNode.GetNextIndex()
+	//头节点的index
+	headNodeIndex := s.HeadNodeNextIndex()
+	if headNodeIndex == index {
+		s.data[s.olen()-1].SetNextIndex(nextIndex)
 	}
-	if headNodeIndex == indexNode.GetNextIndex() {
-		s.data[headNodeIndex].SetNextIndex(indexNode.GetNextIndex())
-	}
-	s.data[index] = StaticListNode{next: indexNode.GetNextIndex()}
+	s.data[index].SetNextIndex(s.FreeNodeNextIndex())
+	s.data[index].SetData(nil)
+	s.data[0].SetNextIndex(index)
 	s.length--
 	return true
 }
