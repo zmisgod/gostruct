@@ -1,5 +1,5 @@
 // @环形队列
-package gostruct
+package queue
 
 import (
 	"fmt"

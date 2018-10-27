@@ -1,4 +1,4 @@
-package gostruct
+package stack
 
 //OrderStack 顺序栈
 type OrderStack struct {

@@ -1,4 +1,4 @@
-package gostruct
+package linked_list
 
 import (
 	"errors"

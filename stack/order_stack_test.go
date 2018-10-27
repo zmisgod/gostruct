@@ -1,4 +1,4 @@
-package gostruct
+package stack
 
 import (
 	"fmt"

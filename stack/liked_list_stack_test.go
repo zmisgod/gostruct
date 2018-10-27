@@ -1,1 +1,1 @@
-package gostruct
+package stack
