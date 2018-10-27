@@ -1,33 +1,31 @@
-package linked_list
+package linkedlist
 
 import (
 	"fmt"
 	"testing"
 )
 
-func TestRInsertAfterNodeDouble(t *testing.T) {
-	doubleList := CreateNewRepeatDoublueLinkedList()
+func TestInsertAfterNodeDouble(t *testing.T) {
+	doubleList := CreateNewDoublueLinkedList()
 	doubleList.InsertAfterHead("111")
 	doubleList.InsertAfterHead("222")
 	doubleList.InsertAfterHead("333")
 	doubleList.Traverse()
 }
-
-func TestRInsertDouble(t *testing.T) {
-	doubleList := CreateNewRepeatDoublueLinkedList()
+func TestInsertDouble(t *testing.T) {
+	doubleList := CreateNewDoublueLinkedList()
 	doubleList.Insert("111")
 	doubleList.Insert("222")
 	doubleList.Insert("333")
 	doubleList.Insert("444")
 	doubleList.Insert("555")
-	node := doubleList.FindByIndex(21)
+	node := doubleList.FindByIndex(5)
 	fmt.Println(node.GetValue())
-	fmt.Println("++======")
 	doubleList.Traverse()
 }
 
-func TestRInsertAfterDouble(t *testing.T) {
-	doubleList := CreateNewRepeatDoublueLinkedList()
+func TestInsertAfterDouble(t *testing.T) {
+	doubleList := CreateNewDoublueLinkedList()
 	doubleList.Insert("111")
 	doubleList.Insert("222")
 	doubleList.Insert("333")
@@ -39,8 +37,8 @@ func TestRInsertAfterDouble(t *testing.T) {
 	doubleList.Traverse()
 }
 
-func TestRInsertBeforeDouble(t *testing.T) {
-	doubleList := CreateNewRepeatDoublueLinkedList()
+func TestInsertBeforeDouble(t *testing.T) {
+	doubleList := CreateNewDoublueLinkedList()
 	doubleList.Insert("111")
 	doubleList.Insert("222")
 	doubleList.Insert("333")
@@ -52,8 +50,8 @@ func TestRInsertBeforeDouble(t *testing.T) {
 	doubleList.Traverse()
 }
 
-func TestRDeleteNodeDouble(t *testing.T) {
-	doubleList := CreateNewRepeatDoublueLinkedList()
+func TestDeleteNodeDouble(t *testing.T) {
+	doubleList := CreateNewDoublueLinkedList()
 	doubleList.Insert("111")
 	doubleList.Insert("222")
 	doubleList.Insert("333")
@@ -61,10 +59,6 @@ func TestRDeleteNodeDouble(t *testing.T) {
 	doubleList.Insert("555")
 	node := doubleList.FindByIndex(0)
 	doubleList.DeleteNode(node)
-
-	node = doubleList.FindByIndex(0)
-	doubleList.DeleteNode(node)
-
 	node = doubleList.FindByIndex(0)
 	doubleList.DeleteNode(node)
 	node = doubleList.FindByIndex(0)

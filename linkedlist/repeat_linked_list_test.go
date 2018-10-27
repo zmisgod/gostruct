@@ -1,37 +1,38 @@
-package linked_list
+package linkedlist
 
 import (
 	"fmt"
 	"testing"
 )
 
-func TestAfterHead(t *testing.T) {
-	singleList := CreateNewSingleLinkedList()
+func TestRAfterHead(t *testing.T) {
+	singleList := CreateNewRepeatLinkedList()
 	singleList.InsertAfterHead("111")
 	singleList.InsertAfterHead("222")
 	singleList.InsertAfterHead("333")
 	singleList.Traverse()
 }
 
-func TestInsertToTail(t *testing.T) {
-	singleList := CreateNewSingleLinkedList()
+func TestRInsertToTail(t *testing.T) {
+	singleList := CreateNewRepeatLinkedList()
 	singleList.InsertAfterTail("111")
 	singleList.InsertAfterTail("222")
 	singleList.InsertAfterTail("333")
 	singleList.Traverse()
 }
 
-func TestFindByIndex(t *testing.T) {
-	singleList := CreateNewSingleLinkedList()
+func TestRFindByIndex(t *testing.T) {
+	singleList := CreateNewRepeatLinkedList()
 	singleList.InsertAfterTail("111")
 	singleList.InsertAfterTail("222")
 	singleList.InsertAfterTail("333")
-	node := singleList.FindByIndex(3)
+	singleList.Traverse()
+	node := singleList.FindByIndex(0)
 	fmt.Println(node.GetValue())
 }
 
-func TestInsertAfterNode(t *testing.T) {
-	singleList := CreateNewSingleLinkedList()
+func TestRInsertAfterNode(t *testing.T) {
+	singleList := CreateNewRepeatLinkedList()
 	singleList.InsertAfterTail("111")
 	singleList.InsertAfterTail("222")
 	singleList.InsertAfterTail("333")
@@ -40,8 +41,8 @@ func TestInsertAfterNode(t *testing.T) {
 	singleList.Traverse()
 }
 
-func TestInsertBeforeNode(t *testing.T) {
-	singleList := CreateNewSingleLinkedList()
+func TestRInsertBeforeNode(t *testing.T) {
+	singleList := CreateNewRepeatLinkedList()
 	singleList.InsertAfterTail("111")
 	singleList.InsertAfterTail("222")
 	singleList.InsertAfterTail("333")
@@ -50,12 +51,16 @@ func TestInsertBeforeNode(t *testing.T) {
 	singleList.Traverse()
 }
 
-func TestDelete(t *testing.T) {
-	singleList := CreateNewSingleLinkedList()
+func TestRDelete(t *testing.T) {
+	singleList := CreateNewRepeatLinkedList()
 	singleList.InsertAfterTail("111")
 	singleList.InsertAfterTail("222")
 	singleList.InsertAfterTail("333")
 	node := singleList.FindByIndex(0)
 	singleList.DeleteNode(node)
+	node1 := singleList.FindByIndex(1)
+	singleList.DeleteNode(node1)
+	// node2 := singleList.FindByIndex(0)
+	// singleList.DeleteNode(node2)
 	singleList.Traverse()
 }
