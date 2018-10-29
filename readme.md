@@ -17,9 +17,10 @@ Practice the data structure with the go language
         - [x] 静态链表
     - 栈
         - [x] 顺序栈
-        - [ ] 链式栈
+        - [x] 链式栈
     - 队列
-        - [ ] 普通队列
+        - [x] 普通队列
+        - [ ] 循环队列
         - [ ] 双端队列
         - [ ] 阻塞队列
         - [ ] 并发队列

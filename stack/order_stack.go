@@ -2,13 +2,13 @@ package stack
 
 //OrderStack 顺序栈
 type OrderStack struct {
-	data   []interface{}
-	length uint
+	data []interface{}
+	top  uint
 }
 
 //NewOrderStack 创建一个顺序栈
 func NewOrderStack(maxStackSize int) *OrderStack {
-	return &OrderStack{data: make([]interface{}, maxStackSize, maxStackSize), length: 0}
+	return &OrderStack{data: make([]interface{}, maxStackSize, maxStackSize), top: 0}
 }
 
 //Push 插入一个数据
@@ -16,8 +16,8 @@ func (s *OrderStack) Push(value interface{}) bool {
 	if s.IsFull() {
 		return false
 	}
-	s.data[s.length] = value
-	s.length++
+	s.data[s.top] = value
+	s.top++
 	return true
 }
 
@@ -26,9 +26,9 @@ func (s *OrderStack) Pop() interface{} {
 	if s.IsEmpty() {
 		return false
 	}
-	s.length--
-	data := s.data[s.length]
-	s.data[s.length] = nil
+	s.top--
+	data := s.data[s.top]
+	s.data[s.top] = nil
 
 	return data
 }
@@ -40,7 +40,7 @@ func (s *OrderStack) olen() int {
 
 //IsFull 判断数组是否满了
 func (s *OrderStack) IsFull() bool {
-	if int(s.length) >= s.olen() {
+	if int(s.top) >= s.olen() {
 		return true
 	}
 	return false
@@ -48,7 +48,7 @@ func (s *OrderStack) IsFull() bool {
 
 //IsEmpty 判断数组是否为空
 func (s *OrderStack) IsEmpty() bool {
-	if s.length == 0 {
+	if s.top == 0 {
 		return true
 	}
 	return false

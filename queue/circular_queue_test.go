@@ -5,27 +5,27 @@ import (
 	"testing"
 )
 
-func TestQueue(t *testing.T) {
-	queueCap := 2
-	myqueue := CreateQueue(queueCap)
-	var queone = "this is a test"
-	myqueue.EnQueue(queone)
-	var quetwo = "this is a test 2"
-	myqueue.EnQueue(quetwo)
-	myqueue.Traverse()
+func TestCircularQueue(t *testing.T) {
+	queue := CreateCircularQueue(4)
+	queue.Enqueue(111)
+	queue.Enqueue(222)
+	queue.Enqueue(333)
+	queue.Enqueue(444)
+	queue.Enqueue(555)
+	queue.Enqueue(666)
+	queue.Traverse()
+	fmt.Println(queue.Dequeue())
 
-	var queueDequeue interface{}
-	myqueue.DeQueue(&queueDequeue)
-	fmt.Println("_+_+_+_+")
-	fmt.Println(queueDequeue)
-	fmt.Println("_+_+_+_+")
+	queue.Enqueue(444)
+	queue.Enqueue(555)
+	queue.Enqueue(666)
 
-	lenght := myqueue.Llength()
-	fmt.Println(lenght)
-
-	var queueDequeueR interface{}
-	myqueue.DeQueue(&queueDequeueR)
-	fmt.Println("_+_+_+_+")
-	fmt.Println(queueDequeueR)
-	fmt.Println("_+_+_+_+")
+	fmt.Println(queue.Dequeue())
+	fmt.Println(queue.Dequeue())
+	fmt.Println(queue.Dequeue())
+	queue.Enqueue(555)
+	queue.Enqueue(666)
+	fmt.Println(queue.Dequeue())
+	fmt.Println(queue.Dequeue())
+	fmt.Println(queue.Dequeue())
 }
