@@ -90,6 +90,7 @@ func (a *Array) DeleteByIndex(index uint) bool {
 			a.data[i] = a.data[i+1]
 		}
 	}
+	//a.data[a.Len() -1]
 	a.length--
 	return true
 }

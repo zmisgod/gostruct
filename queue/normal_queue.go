@@ -1,13 +1,15 @@
 package queue
 
 import "fmt"
-//NormalQueue 普通队列
+
+//NormalQueue 普通队列(数组)
 type NormalQueue struct {
 	length uint //当前队列长度
 	tail   uint //尾指针
 	head   uint //头指针
 	data   []interface{}
 }
+
 //NewNormalQueue 创建一个普通队列
 func NewNormalQueue(maxSize uint) *NormalQueue {
 	return &NormalQueue{length: 0, data: make([]interface{}, maxSize, maxSize), tail: 0, head: 0}
