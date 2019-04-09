@@ -1,3 +1,5 @@
 *.md
-.idea
+.idea/*
 .vscode
+.idea/
+.idea
