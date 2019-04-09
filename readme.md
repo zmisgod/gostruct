@@ -68,11 +68,11 @@ Practice the data structure with the go language
     - [ ] 最大流
 - 排序
     - O(n^2)
-        - [ ] 冒泡排序
-        - [ ] 插入排序
-        - [ ] 选择排序
+        - [x] 冒泡排序
+        - [x] 插入排序
+        - [x] 选择排序
         - [ ] 希尔排序
-    - O(nlohn)
+    - O(nlogn)
         - [ ] 归并排序
         - [ ] 快速排序
         - [ ] 堆排序
