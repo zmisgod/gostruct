@@ -8,29 +8,14 @@ func SelectSort(arr []int) []int {
 	if len(arr) <= 0 {
 		return arr
 	}
-	sorted := make([]int, 0)
-	min := arr[0]
-	for len(arr) > 0 {
-		min, arr = minF(arr)
-		sorted = append(sorted, min)
-	}
-	return sorted
-}
-
-func minF(arr []int) (int, []int) {
-	res := make([]int, 0)
-	index := 0
-	min := arr[0]
-	for i := 1; i < len(arr); i++ {
-		if min > arr[i] {
-			min = arr[i]
-			index = i
+	for i := 0; i < len(arr) - 1; i++ {
+		min := i
+		for j := i+ 1; j < len(arr); j++ {
+			if arr[min] > arr[j] {
+				min = j
+			}
 		}
+		arr[i], arr[min] = arr[min],arr[i]
 	}
-	for i:=0;i<len(arr) ;i++  {
-		if i != index {
-			res = append(res, arr[i])
-		}
-	}
-	return min, res
+	return arr
 }
