@@ -5,14 +5,13 @@ import (
 	"testing"
 )
 
-func TestNormalQueueOne(t *testing.T)  {
+func TestNormalQueueOne(t *testing.T) {
 	queue := NewNormalQueue(4)
 	fmt.Println(queue.Enqueue(111))
 	fmt.Println(queue.Enqueue(222))
 	fmt.Println(queue.Enqueue(333))
 	fmt.Println(queue.Enqueue(444))
 	fmt.Println(queue.Enqueue(555))
-
 
 	queue.Traverse()
 
@@ -30,7 +29,7 @@ func TestNormalQueueOne(t *testing.T)  {
 	fmt.Println(queue.tail)
 }
 
-func TestNormalQueueTwo(t *testing.T)  {
+func TestNormalQueueTwo(t *testing.T) {
 	queue := NewNormalQueue(4)
 	queue.Enqueue(111)
 	queue.Enqueue(222)

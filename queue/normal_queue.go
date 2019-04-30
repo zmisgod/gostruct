@@ -17,13 +17,13 @@ func NewNormalQueue(maxSize uint) *NormalQueue {
 
 //Enqueue 入队
 func (s *NormalQueue) Enqueue(value interface{}) bool {
-	if s.olen() == int(s.tail){
+	if s.olen() == int(s.tail) {
 		if s.head == 0 {
 			return false
-		}else{
+		} else {
 			tail := s.tail - s.head
-			for i:=s.head; i< s.tail;i++  {
-				s.data[s.tail - i] = s.data[i]
+			for i := s.head; i < s.tail; i++ {
+				s.data[s.tail-i] = s.data[i]
 			}
 			s.head = 0
 			s.tail = tail

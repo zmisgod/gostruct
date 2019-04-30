@@ -22,7 +22,7 @@ func TestBlockingQueue(t *testing.T) {
 	var chan1 chan int
 	var stop int
 	for stop == 0 {
-		data := <- chan1
+		data := <-chan1
 		fmt.Println(data)
 	}
 }

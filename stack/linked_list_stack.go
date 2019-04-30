@@ -82,7 +82,7 @@ func (s *LinkedListStack) Push(data interface{}) bool {
 //Pop 删除
 func (s *LinkedListStack) Pop() *SListNode {
 	length := s.top
-	length --
+	length--
 	node := s.findByIndex(length)
 	s.deleteNode(node)
 	return node

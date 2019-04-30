@@ -4,10 +4,10 @@ import "fmt"
 
 //CircularQueue 环形队列
 type CircularQueue struct {
-	data []interface{}
-	length   uint
-	heap     uint
-	tail     uint
+	data   []interface{}
+	length uint
+	heap   uint
+	tail   uint
 }
 
 //CreateQueue 创建队列
@@ -21,7 +21,7 @@ func (s *CircularQueue) Enqueue(value interface{}) bool {
 	}
 	s.data[s.tail] = value
 	tail := s.tail
-	tail ++
+	tail++
 	s.tail = tail % uint(s.olen())
 	s.length++
 	return false
@@ -34,13 +34,13 @@ func (s *CircularQueue) Dequeue() interface{} {
 	data := s.data[s.heap]
 	s.data[s.heap] = nil
 	heap := s.heap
-	heap ++
+	heap++
 	s.heap = heap % uint(s.olen())
 	s.length--
 	return data
 }
 
-func (s *CircularQueue) Traverse(){
+func (s *CircularQueue) Traverse() {
 	if s.length > 0 {
 		fmt.Println(s.data)
 	}
@@ -52,7 +52,7 @@ func (s *CircularQueue) len() int {
 }
 
 func (s *CircularQueue) isFull() bool {
-	if (s.tail + 1) % uint(s.olen()) == s.heap {
+	if (s.tail+1)%uint(s.olen()) == s.heap {
 		return true
 	}
 	return false
