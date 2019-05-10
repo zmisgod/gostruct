@@ -71,7 +71,7 @@ Practice the data structure with the go language
         - [x] 冒泡排序
         - [x] 插入排序
         - [x] 选择排序
-        - [ ] 希尔排序
+        - [x] 希尔排序
     - O(nlogn)
         - [ ] 归并排序
         - [ ] 快速排序
