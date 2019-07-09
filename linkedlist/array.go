@@ -12,11 +12,11 @@ type Array struct {
 }
 
 //CreateNewArray 创建一个数组
-func CreateNewArray(maxLenght uint) *Array {
-	if maxLenght <= 0 {
+func CreateNewArray(maxLength uint) *Array {
+	if maxLength <= 0 {
 		return nil
 	}
-	return &Array{0, make([]int, maxLenght, maxLenght)}
+	return &Array{0, make([]int, maxLength, maxLength)}
 }
 
 //Len 数组长度

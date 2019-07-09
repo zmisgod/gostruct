@@ -4,8 +4,8 @@ import (
 	"fmt"
 )
 
-//DoublueLinkedList 双向链表
-type DoublueLinkedList struct {
+//DoubleLinkedList 双向链表
+type DoubleLinkedList struct {
 	length uint
 	head   *DListNode
 }
@@ -40,23 +40,23 @@ func (d *DListNode) GetValue() interface{} {
 	return d.value
 }
 
-//CreateNewDoublueLinkedList 创建一个双向链表
-func CreateNewDoublueLinkedList() *DoublueLinkedList {
-	return &DoublueLinkedList{length: 0, head: NewDoubleListNode(0)}
+//CreateNewDoubleLinkedList 创建一个双向链表
+func CreateNewDoubleLinkedList() *DoubleLinkedList {
+	return &DoubleLinkedList{length: 0, head: NewDoubleListNode(0)}
 }
 
 //PreNode 查找上一个node
-func (d *DoublueLinkedList) PreNode(n *DListNode) *DListNode {
+func (d *DoubleLinkedList) PreNode(n *DListNode) *DListNode {
 	return n.pre
 }
 
 //NextNode 根据指针查找下一个node
-func (d *DoublueLinkedList) NextNode(n *DListNode) *DListNode {
+func (d *DoubleLinkedList) NextNode(n *DListNode) *DListNode {
 	return n.next
 }
 
 //FindByIndex 根据index查找
-func (d *DoublueLinkedList) FindByIndex(index uint) *DListNode {
+func (d *DoubleLinkedList) FindByIndex(index uint) *DListNode {
 	//1 0
 	if d.length >= index {
 		current := d.head.next
@@ -72,7 +72,7 @@ func (d *DoublueLinkedList) FindByIndex(index uint) *DListNode {
 //InsertAfter 在之后插入
 //              pre5 pre6
 // [pre1 pre2] [nil  nil ] [pre3 pre4]
-func (d *DoublueLinkedList) InsertAfter(n *DListNode, value interface{}) bool {
+func (d *DoubleLinkedList) InsertAfter(n *DListNode, value interface{}) bool {
 	if n == nil || d.head == nil {
 		return false
 	}
@@ -90,12 +90,12 @@ func (d *DoublueLinkedList) InsertAfter(n *DListNode, value interface{}) bool {
 }
 
 //InsertAfterHead 插入head
-func (d *DoublueLinkedList) InsertAfterHead(value interface{}) bool {
+func (d *DoubleLinkedList) InsertAfterHead(value interface{}) bool {
 	return d.InsertAfter(d.head, value)
 }
 
 //Insert 顺序插入
-func (d *DoublueLinkedList) Insert(value interface{}) bool {
+func (d *DoubleLinkedList) Insert(value interface{}) bool {
 	node := d.head
 	for node.next != nil {
 		node = node.next
@@ -106,7 +106,7 @@ func (d *DoublueLinkedList) Insert(value interface{}) bool {
 //InsertBefore 在之前插入
 //              pre5 pre6
 // [pre1 pre2] [nil  nil ] [pre3 pre4]
-func (d *DoublueLinkedList) InsertBefore(n *DListNode, value interface{}) bool {
+func (d *DoubleLinkedList) InsertBefore(n *DListNode, value interface{}) bool {
 	node := n.pre
 	return d.InsertAfter(node, value)
 }
@@ -114,7 +114,7 @@ func (d *DoublueLinkedList) InsertBefore(n *DListNode, value interface{}) bool {
 //DeleteNode 删除node
 //              pre5 pre6
 // [pre1 pre2] [nil  nil ] [pre3 pre4]
-func (d *DoublueLinkedList) DeleteNode(n *DListNode) bool {
+func (d *DoubleLinkedList) DeleteNode(n *DListNode) bool {
 	if n == nil {
 		return false
 	}
@@ -131,7 +131,7 @@ func (d *DoublueLinkedList) DeleteNode(n *DListNode) bool {
 }
 
 //Traverse 遍历list
-func (d *DoublueLinkedList) Traverse() {
+func (d *DoubleLinkedList) Traverse() {
 	if d.length > 0 {
 		node := d.head.next
 		for node != nil {

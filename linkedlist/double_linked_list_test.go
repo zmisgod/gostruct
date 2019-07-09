@@ -6,14 +6,14 @@ import (
 )
 
 func TestInsertAfterNodeDouble(t *testing.T) {
-	doubleList := CreateNewDoublueLinkedList()
+	doubleList := CreateNewDoubleLinkedList()
 	doubleList.InsertAfterHead("111")
 	doubleList.InsertAfterHead("222")
 	doubleList.InsertAfterHead("333")
 	doubleList.Traverse()
 }
 func TestInsertDouble(t *testing.T) {
-	doubleList := CreateNewDoublueLinkedList()
+	doubleList := CreateNewDoubleLinkedList()
 	doubleList.Insert("111")
 	doubleList.Insert("222")
 	doubleList.Insert("333")
@@ -25,7 +25,7 @@ func TestInsertDouble(t *testing.T) {
 }
 
 func TestInsertAfterDouble(t *testing.T) {
-	doubleList := CreateNewDoublueLinkedList()
+	doubleList := CreateNewDoubleLinkedList()
 	doubleList.Insert("111")
 	doubleList.Insert("222")
 	doubleList.Insert("333")
@@ -38,7 +38,7 @@ func TestInsertAfterDouble(t *testing.T) {
 }
 
 func TestInsertBeforeDouble(t *testing.T) {
-	doubleList := CreateNewDoublueLinkedList()
+	doubleList := CreateNewDoubleLinkedList()
 	doubleList.Insert("111")
 	doubleList.Insert("222")
 	doubleList.Insert("333")
@@ -51,7 +51,7 @@ func TestInsertBeforeDouble(t *testing.T) {
 }
 
 func TestDeleteNodeDouble(t *testing.T) {
-	doubleList := CreateNewDoublueLinkedList()
+	doubleList := CreateNewDoubleLinkedList()
 	doubleList.Insert("111")
 	doubleList.Insert("222")
 	doubleList.Insert("333")
