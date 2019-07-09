@@ -40,6 +40,9 @@ func (n *LRUCacheNode) NextValue() (string, interface{}) {
 }
 
 func (cache *LRURepeatDoubleLinkedList) Put(key string ,value interface{}) {
+	if key == "" {
+		return
+	}
 	node := newNode(key, value)
 	if cache.maxCap <= cache.nowCap {
 		last := cache.head.pre
@@ -54,7 +57,9 @@ func (cache *LRURepeatDoubleLinkedList) Put(key string ,value interface{}) {
 	node.next = first
 	cache.head.next = node
 	node.pre = cache.head
-	cache.nowCap+=1
+	if cache.maxCap > cache.nowCap {
+		cache.nowCap += 1
+	}
 }
 
 func (cache *LRURepeatDoubleLinkedList)  Get(key string ) interface{} {
@@ -63,6 +68,17 @@ func (cache *LRURepeatDoubleLinkedList)  Get(key string ) interface{} {
 		now := cache.head.next
 		for ; i < cache.nowCap; i++ {
 			if now.key == key {
+				//需要将此key设置到头部
+				now.pre.next = now.next
+				now.next.pre = now.pre
+
+				//将now设置在cache头部
+				first := cache.head.next
+				first.pre = now
+				now.next = first
+				cache.head.next = now
+				now.pre = cache.head
+
 				return now.value
 			}else{
 				now = now.next
