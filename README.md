@@ -15,6 +15,7 @@ Practice the data structure with the go language
         - [x] 循环链表
         - [x] 双向循环链表
         - [x] 静态链表
+        - [x] 基于双向循环链表的LRU Cache
     - 栈
         - [x] 顺序栈
         - [x] 链式栈
