@@ -10,28 +10,28 @@ import (
 type LRURepeatDoubleLinkedList struct {
 	maxCap uint
 	nowCap uint
-	head *LRUCacheNode
+	head   *LRUCacheNode
 }
 
 type LRUCacheNode struct {
-	key string
+	key   string
 	value interface{}
-	pre *LRUCacheNode
-	next *LRUCacheNode
+	pre   *LRUCacheNode
+	next  *LRUCacheNode
 }
 
-func NewLRUCache(maxCap uint) *LRURepeatDoubleLinkedList{
+func NewLRUCache(maxCap uint) *LRURepeatDoubleLinkedList {
 	node := newNode("", 0)
 	node.pre = node
 	node.next = node
-	return &LRURepeatDoubleLinkedList{maxCap:maxCap, head:node}
+	return &LRURepeatDoubleLinkedList{maxCap: maxCap, head: node}
 }
 
-func newNode(key string , value interface{})*LRUCacheNode {
-	return &LRUCacheNode{key:key, value:value}
+func newNode(key string, value interface{}) *LRUCacheNode {
+	return &LRUCacheNode{key: key, value: value}
 }
 
-func (n *LRUCacheNode) PreValue() (string, interface{}){
+func (n *LRUCacheNode) PreValue() (string, interface{}) {
 	return n.pre.key, n.pre.value
 }
 
@@ -39,7 +39,7 @@ func (n *LRUCacheNode) NextValue() (string, interface{}) {
 	return n.next.key, n.next.value
 }
 
-func (cache *LRURepeatDoubleLinkedList) Put(key string ,value interface{}) {
+func (cache *LRURepeatDoubleLinkedList) Put(key string, value interface{}) {
 	if key == "" {
 		return
 	}
@@ -62,7 +62,7 @@ func (cache *LRURepeatDoubleLinkedList) Put(key string ,value interface{}) {
 	}
 }
 
-func (cache *LRURepeatDoubleLinkedList)  Get(key string ) interface{} {
+func (cache *LRURepeatDoubleLinkedList) Get(key string) interface{} {
 	if cache.nowCap > 0 {
 		var i uint
 		now := cache.head.next
@@ -80,7 +80,7 @@ func (cache *LRURepeatDoubleLinkedList)  Get(key string ) interface{} {
 				now.pre = cache.head
 
 				return now.value
-			}else{
+			} else {
 				now = now.next
 			}
 		}
