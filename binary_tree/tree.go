@@ -3,7 +3,6 @@ package binary_tree
 import (
 	"errors"
 	"fmt"
-	"math"
 )
 
 type BTree struct {
@@ -12,10 +11,37 @@ type BTree struct {
 }
 
 type TreeNode struct {
-	left   *TreeNode
-	right  *TreeNode
-	value  uint
-	parent *TreeNode
+	left  *TreeNode
+	right *TreeNode
+	value uint
+}
+
+func (node *TreeNode) GetMinNode(parent *TreeNode, dir uint8) (*TreeNode, uint8, *TreeNode) {
+	if node == nil {
+		return nil, 0, parent
+	}
+	if node.left == nil && node.right == nil {
+		return node, dir, parent
+	}
+	if node.left != nil {
+		parent = node
+		return node.left.GetMinNode(parent, 1)
+	}
+	return node, 2, parent
+}
+
+func (node *TreeNode) GetMaxNode(parent *TreeNode, dir uint8) (*TreeNode, uint8, *TreeNode) {
+	if node == nil {
+		return nil, 0, parent
+	}
+	if node.left == nil && node.right == nil {
+		return node, dir, parent
+	}
+	if node.right != nil {
+		parent = node
+		return node.right.GetMinNode(parent, 2)
+	}
+	return nil, 0, parent
 }
 
 func (node *TreeNode) InOrder() {
@@ -45,8 +71,8 @@ func (node *TreeNode) PostOrder() {
 	fmt.Printf("%v \n", node.value)
 }
 
-func NewNode(value uint, parent *TreeNode) *TreeNode {
-	return &TreeNode{value: value, parent: parent}
+func NewNode(value uint) *TreeNode {
+	return &TreeNode{value: value}
 }
 
 func NewBTree() *BTree {
@@ -66,10 +92,10 @@ func (tree *BTree) Add(value uint) *TreeNode {
 			node = node.right
 		}
 	}
-	nowNode := NewNode(value, parent)
+	nowNode := NewNode(value)
 	if parent == nil {
 		tree.root = nowNode
-	}else if value < parent.value {
+	} else if value < parent.value {
 		parent.left = nowNode
 	} else {
 		parent.right = nowNode
@@ -78,83 +104,111 @@ func (tree *BTree) Add(value uint) *TreeNode {
 	return parent
 }
 
-func (tree *BTree) FindValue(value uint) *TreeNode {
-	node := tree.root
+func (node *TreeNode) FindValue(value uint, parent *TreeNode) (*TreeNode, uint8, *TreeNode) {
+	var dir uint8
+	//父节点
 	for node != nil {
-		if value > node.value {
-			node = node.right
-		} else if node.value == value {
-			return node
+		if node.value > value {
+			parent = node
+			dir = 1
+			return node.left.FindValue(value, parent)
+		} else if node.value < value {
+			parent = node
+			dir = 2
+			return node.right.FindValue(value, parent)
 		} else {
-			node = node.left
+			return node, dir, parent
 		}
 	}
-	return nil
+	return nil, dir, parent
+}
+
+func (tree *BTree) FindValue(value uint) (*TreeNode, uint8, *TreeNode) {
+	node := tree.root
+	parent := node
+	return node.FindValue(value, parent)
 }
 
 func (tree *BTree) Delete(value uint) error {
-	searchNode := tree.FindValue(value)
+	searchNode, _, parentNode := tree.FindValue(value)
 	if searchNode == nil {
-		return errors.New("没有找到该数字")
+		return errors.New("DO NOT FIND THIS VALUE")
 	}
-	isLeft := false
-	//情况1 这个节点没有子节点
-	if searchNode.left == nil && searchNode.right == nil {
-		searchNode = nil
-		if searchNode.parent.left == searchNode {
-			isLeft = true
-		}
-		if isLeft {
-			searchNode.parent.left = nil
-		}else{
-			searchNode.parent.right = nil
-		}
-	}
-	//情况1 这个节点有且仅有一个子节点
-	if (searchNode.left != nil && searchNode.right == nil) || (searchNode.left == nil && searchNode.right != nil) {
-		//仅存在左节点
-		if searchNode.left != nil && searchNode.right == nil {
-			if searchNode.parent != nil {
-				searchNode.parent.right = searchNode.right
-			}
-			searchNode = nil
-			tree.length -= 1
-			return nil
-		}
-		//仅存在右节点
-		if searchNode.left != nil && searchNode.right == nil {
-			if searchNode.parent != nil {
-				searchNode.parent.left = searchNode.left
-			}
-			searchNode = nil
-			tree.length -= 1
-			return nil
-		}
-	}
-
-	//情况3 这个节点左子树与右子树都有子节点
 	if searchNode.left != nil && searchNode.right != nil {
-		temp := searchNode
-		saveTemp :=searchNode
-		if searchNode.left != nil {
-			searchNode := searchNode.left
-			searchNode.value = value
-			temp.left = searchNode.left
-			for ;searchNode.left != nil ;searchNode= searchNode.left  {
-
-			}
-			searchNode.left = saveTemp
-			saveTemp.left = nil
-		}else{
-			saveTemp.value = searchNode.value
-			temp.left = searchNode.left
+		minNode := searchNode.right
+		minParent := searchNode
+		for minNode.left != nil {
+			minParent = minNode
+			minNode = minNode.left
 		}
+		searchNode.value = minNode.value
+		searchNode = minNode
+		parentNode = minParent
+	}
+	//需要删除节点的子节点
+	var sonSearchNode *TreeNode
+	if searchNode.left != nil {
+		sonSearchNode = searchNode.left
+	} else if searchNode.right != nil {
+		sonSearchNode = searchNode.right
+	}else{
+		sonSearchNode = nil
+	}
+
+	if parentNode == nil {
+		fmt.Println("----111")
+		//删除的就是根节点
+		tree.root = sonSearchNode
+	} else if parentNode.left == searchNode {
+		parentNode.left = sonSearchNode
+	} else {
+		parentNode.right = sonSearchNode
 	}
 	return nil
 }
 
-//获取树的高度
-func (tree *BTree) GetTreeHeight() uint {
+//中序遍历
+func (tree *BTree) InOrderTraverse() {
+	if tree.root == nil {
+		return
+	}
+	tree.root.InOrder()
+}
+
+//先序遍历
+func (tree *BTree) PreOrderTraverse() {
+	if tree.root == nil {
+		return
+	}
+	tree.root.PreOrder()
+}
+
+//后序遍历
+func (tree *BTree) PostOrderTraverse() {
+	if tree.root == nil {
+		return
+	}
+	tree.root.PostOrder()
+}
+
+//获取叶子节点
+func (tree *BTree) GetLeavesPoint() uint {
+	return 0
+}
+
+//是否为满二叉树
+func (tree *BTree) IsFullBTree() bool {
+	return false
+}
+
+//是否为完全二叉树
+func (tree *BTree) IsCompletedBTree() bool {
+	return false
+}
+
+//获取此树的深度
+func (tree *BTree) GetDeep(index uint) uint {
+
 	return 0
 }
 
@@ -183,46 +237,7 @@ func (tree *BTree) GetBrotherPoint(node *TreeNode) uint {
 	return 0
 }
 
-//获取叶子节点
-func (tree *BTree) GetLeavesPoint() uint {
+//获取树的高度
+func (tree *BTree) GetTreeHeight() uint {
 	return 0
-}
-
-//是否为满二叉树
-func (tree *BTree) IsFullBTree() bool {
-	return false
-}
-
-//是否为完全二叉树
-func (tree *BTree) IsCompletedBTree() bool {
-	return false
-}
-
-func (tree *BTree) GetDeep(index uint) uint {
-	deep := uint(math.Ceil(math.Log2(float64(index + 1))))
-	return deep
-}
-
-//中序遍历
-func (tree *BTree) InOrderTraverse() {
-	if tree.root == nil {
-		return
-	}
-	tree.root.InOrder()
-}
-
-//先序遍历
-func (tree *BTree) PreOrderTraverse() {
-	if tree.root == nil {
-		return
-	}
-	tree.root.PreOrder()
-}
-
-//后序遍历
-func (tree *BTree) PostOrderTraverse() {
-	if tree.root == nil {
-		return
-	}
-	tree.root.PostOrder()
 }
