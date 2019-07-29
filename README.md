@@ -23,7 +23,7 @@ Practice the data structure with the go language
         - [x] 普通队列
         - [x] 循环队列
         - [ ] 双端队列
-        - [ ] 阻塞队列
+        - [x] 阻塞队列
         - [ ] 并发队列
         - [ ] 阻塞并发队列
 - 散列表

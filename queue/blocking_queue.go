@@ -3,35 +3,41 @@ package queue
 //BlockingQueue 阻塞队列
 type BlockingQueue struct {
 	length int
+	cap    int
 	data   chan interface{}
 }
 
 //NewBlockingQueue 创建一个阻塞队列
-func NewBlockingQueue(maxSize uint) *BlockingQueue {
-	return &BlockingQueue{length: 0, data: make(chan interface{}, maxSize)}
+func NewBlockingQueue(maxSize int) *BlockingQueue {
+	queue := &BlockingQueue{
+		length: 0,
+		cap:    maxSize,
+		data:   make(chan interface{}, maxSize),
+	}
+	return queue
 }
 
 //Enqueue 入队
-func (s *BlockingQueue) Enqueue(value interface{}) error {
-	select {
-	case s.data <- value:
+func (s *BlockingQueue) Enqueue(value interface{}) {
+	if !s.isFull() {
+		s.data <- value
 		s.length++
-		return nil
 	}
 }
 
 //Dequeue 出队
 func (s *BlockingQueue) Dequeue() interface{} {
-	var data interface{}
-	select {
-	case data = <-s.data:
-		s.length--
-		return data
+	if !s.isEmpty() {
+		for v := range s.data {
+			s.length--
+			return v
+		}
 	}
+	return nil
 }
 
 func (s *BlockingQueue) isFull() bool {
-	if len(s.data) >= s.length {
+	if s.length >= s.cap {
 		return true
 	}
 	return false

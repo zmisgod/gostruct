@@ -1,28 +1,29 @@
 package queue
 
 import (
-	"flag"
 	"fmt"
 	"testing"
 )
 
 func TestBlockingQueue(t *testing.T) {
-	//queue := NewBlockingQueue(4)
-	//queue.Enqueue(222)
-	//queue.Enqueue(333)
-	//queue.Enqueue(444)
-	//queue.Enqueue(555)
-	//fmt.Println(queue.Dequeue())
-	//fmt.Println(queue.Dequeue())
-	//fmt.Println(queue.Dequeue())
-	//fmt.Println(queue.Dequeue())
-	//close(queue.data)
-	var input int
-	flag.IntVar(&input, "input", 1, "test")
-	var chan1 chan int
-	var stop int
-	for stop == 0 {
-		data := <-chan1
-		fmt.Println(data)
-	}
+	queue := NewBlockingQueue(4)
+	fmt.Printf("out %v \n", queue.Dequeue())
+	queue.Enqueue(222)
+	fmt.Printf("out %v \n", queue.Dequeue())
+	queue.Enqueue(333)
+	queue.Enqueue(444)
+	queue.Enqueue(555)
+	fmt.Printf("out %v \n", queue.Dequeue())
+	fmt.Printf("out %v \n", queue.Dequeue())
+	fmt.Printf("out %v \n", queue.Dequeue())
+	queue.Enqueue(666)
+	queue.Enqueue(777)
+	queue.Enqueue(888)
+	queue.Enqueue(999)
+	queue.Enqueue(1000)
+	queue.Enqueue(1111)
+	fmt.Printf("out %v \n", queue.Dequeue())
+	fmt.Printf("out %v \n", queue.Dequeue())
+	fmt.Printf("out %v \n", queue.Dequeue())
+	fmt.Printf("out %v \n", queue.Dequeue())
 }
