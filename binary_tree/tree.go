@@ -71,6 +71,42 @@ func (node *TreeNode) PostOrder() {
 	fmt.Printf("%v \n", node.value)
 }
 
+func (node *TreeNode) LeafPrint() {
+	if node == nil {
+		return
+	}
+	if node.left == nil && node.right == nil {
+		fmt.Printf("%v \n", node.value)
+	}
+	node.left.LeafPrint()
+	node.right.LeafPrint()
+}
+
+func (node *TreeNode) CheckFather(count *int) interface{} {
+	if node.left != nil || node.right != nil {
+		*count++
+		if node.left != nil {
+			node.left.CheckFather(count)
+		}
+		if node.right != nil {
+			node.right.CheckFather(count)
+		}
+	}
+	return nil
+}
+
+//是否为满二叉树
+func (node *TreeNode) IsFullTree() bool {
+	isFull := false
+
+	return isFull
+}
+
+//是否为完全二叉树
+func (node *TreeNode) IsComTree() bool {
+	return false
+}
+
 func NewNode(value uint) *TreeNode {
 	return &TreeNode{value: value}
 }
@@ -104,36 +140,34 @@ func (tree *BTree) Add(value uint) *TreeNode {
 	return parent
 }
 
-func (node *TreeNode) FindValue(value uint, parent *TreeNode) (*TreeNode, uint8, *TreeNode) {
-	var dir uint8
+func (node *TreeNode) FindValue(value uint, parent *TreeNode) (*TreeNode, *TreeNode) {
 	//父节点
 	for node != nil {
 		if node.value > value {
 			parent = node
-			dir = 1
 			return node.left.FindValue(value, parent)
 		} else if node.value < value {
 			parent = node
-			dir = 2
 			return node.right.FindValue(value, parent)
 		} else {
-			return node, dir, parent
+			return node, parent
 		}
 	}
-	return nil, dir, parent
+	return nil, parent
 }
 
-func (tree *BTree) FindValue(value uint) (*TreeNode, uint8, *TreeNode) {
+func (tree *BTree) FindValue(value uint) (*TreeNode, *TreeNode) {
 	node := tree.root
 	parent := node
 	return node.FindValue(value, parent)
 }
 
 func (tree *BTree) Delete(value uint) error {
-	searchNode, _, parentNode := tree.FindValue(value)
+	searchNode, parentNode := tree.FindValue(value)
 	if searchNode == nil {
 		return errors.New("DO NOT FIND THIS VALUE")
 	}
+	//当节点的左右子树都有节点的情况
 	if searchNode.left != nil && searchNode.right != nil {
 		minNode := searchNode.right
 		minParent := searchNode
@@ -141,33 +175,37 @@ func (tree *BTree) Delete(value uint) error {
 			minParent = minNode
 			minNode = minNode.left
 		}
+		//将需要删除的节点的value的值替换此节点右边最小的节点的值
 		searchNode.value = minNode.value
+		//然后此问题就变成了删除最左节点（最小）的问题
 		searchNode = minNode
 		parentNode = minParent
 	}
-	//需要删除节点的子节点
+
+	//当节点的左右子树只有一个或没有节点的情况
 	var sonSearchNode *TreeNode
 	if searchNode.left != nil {
 		sonSearchNode = searchNode.left
 	} else if searchNode.right != nil {
 		sonSearchNode = searchNode.right
-	}else{
+	} else {
 		sonSearchNode = nil
 	}
 
 	if parentNode == nil {
-		fmt.Println("----111")
-		//删除的就是根节点
+		//如果没有父节点，说明删除的就是根节点
 		tree.root = sonSearchNode
 	} else if parentNode.left == searchNode {
+		//如果父节点的左子树等于删除的节点，则父节点的左子树为当前的子节点
 		parentNode.left = sonSearchNode
 	} else {
+		//否则为右子树的子节点
 		parentNode.right = sonSearchNode
 	}
 	return nil
 }
 
-//中序遍历
+//打印中序遍历
 func (tree *BTree) InOrderTraverse() {
 	if tree.root == nil {
 		return
@@ -175,7 +213,7 @@ func (tree *BTree) InOrderTraverse() {
 	tree.root.InOrder()
 }
 
-//先序遍历
+//打印先序遍历
 func (tree *BTree) PreOrderTraverse() {
 	if tree.root == nil {
 		return
@@ -183,7 +221,7 @@ func (tree *BTree) PreOrderTraverse() {
 	tree.root.PreOrder()
 }
 
-//后序遍历
+//打印后序遍历
 func (tree *BTree) PostOrderTraverse() {
 	if tree.root == nil {
 		return
@@ -191,25 +229,26 @@ func (tree *BTree) PostOrderTraverse() {
 	tree.root.PostOrder()
 }
 
-//获取叶子节点
-func (tree *BTree) GetLeavesPoint() uint {
-	return 0
+//打印叶子节点（没有子节点）
+func (tree *BTree) GetLeavesPoint() {
+	tree.root.LeafPrint()
 }
 
-//是否为满二叉树
+//获取父节点
+func (tree *BTree) GetFatherPoint() int {
+	var i int
+	tree.root.CheckFather(&i)
+	return i
+}
+
+//是否为满二叉树（所有层的节点数都达到最大）
 func (tree *BTree) IsFullBTree() bool {
 	return false
 }
 
-//是否为完全二叉树
+//是否为完全二叉树（倒数第二层节点都达到最大）
 func (tree *BTree) IsCompletedBTree() bool {
 	return false
-}
-
-//获取此树的深度
-func (tree *BTree) GetDeep(index uint) uint {
-
-	return 0
 }
 
 //获取树的深度
@@ -219,16 +258,6 @@ func (tree *BTree) GetTreeDepth() uint {
 
 //获取树的层
 func (tree *BTree) GetTreeLevel() uint {
-	return 0
-}
-
-//获取父节点
-func (tree *BTree) GetFatherPoint() uint {
-	return 0
-}
-
-//获取子节点
-func (tree *BTree) GetSonPoint() uint {
 	return 0
 }
 

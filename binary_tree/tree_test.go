@@ -16,14 +16,16 @@ func TestTree(t *testing.T) {
 	_ = tree.Add(2)
 	_ = tree.Add(7)
 	_ = tree.Add(8)
-	if err := tree.Delete(3); err != nil {
-		fmt.Println(err)
-	}
-	if err := tree.Delete(4); err != nil {
-		fmt.Println(err)
-	}
+	//if err := tree.Delete(3); err != nil {
+	//	fmt.Println(err)
+	//}
+	//if err := tree.Delete(4); err != nil {
+	//	fmt.Println(err)
+	//}
 	fmt.Println("----")
 	tree.PreOrderTraverse()
+	fmt.Println("----")
+	fmt.Println(tree.GetFatherPoint())
 	//fmt.Println("----")
 	//tree.InOrderTraverse()
 	//fmt.Println("----")
